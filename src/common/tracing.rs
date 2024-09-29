@@ -48,11 +48,11 @@ pub fn init_tracing(service_name: &str) {
 
 #[allow(dead_code)]
 pub trait WithInfoPropagation {
-    fn with_propagation(&self) -> &Self;
+    fn with_propagation(self) -> Self;
 }
 
 impl WithInfoPropagation for span::Span {
-    fn with_propagation(&self) -> &Self {
+    fn with_propagation(self) -> Self {
         self.set_attribute(
             "meta.trace_id",
             format!("{:032x}", self.context().span().span_context().trace_id()),
